@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { TodoStatus, TodoStatusArray } from "../constants";
-import { todos as todosMock } from "../mocks";
+
+const todosFromLocalStorage = JSON.parse(localStorage.getItem("todos")) ?? [];
+const initialTodos = [...todosFromLocalStorage];
 
 export default function useTodos() {
-    const [todos, setTodos] = useState(todosMock);
+    const [todos, setTodos] = useState(initialTodos);
+
+    useEffect(() => {
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }, [todos]);
 
     const addTodo = (newTodo) => {
         setTodos([
