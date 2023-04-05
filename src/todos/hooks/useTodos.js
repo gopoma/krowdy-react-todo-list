@@ -7,44 +7,44 @@ const todosFromLocalStorage = JSON.parse(localStorage.getItem("todos")) ?? [];
 const initialTodos = [...todosFromLocalStorage];
 
 export default function useTodos() {
-    const [todos, setTodos] = useState(initialTodos);
+	const [todos, setTodos] = useState(initialTodos);
 
-    useEffect(() => {
-        localStorage.setItem("todos", JSON.stringify(todos));
-    }, [todos]);
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todos));
+	}, [todos]);
 
-    const addTodo = (newTodo) => {
-        setTodos([
-            {
-                ...newTodo,
-                id: uuidv4(),
-                status: TodoStatus.PENDING,
-            },
-            ...todos,
-        ]);
-    };
+	const addTodo = (newTodo) => {
+		setTodos([
+			{
+				...newTodo,
+				id: uuidv4(),
+				status: TodoStatus.PENDING
+			},
+			...todos
+		]);
+	};
 
-    const rotateTodoStatus = (idTodo) => {
-        const todosWithEditedOne = todos.map((todo) => {
-            if(todo.id === idTodo) {
-                const currentTodoStatusIndex = TodoStatusArray.findIndex((todoStatus) => todoStatus === todo.status);
-                const status = TodoStatusArray[(currentTodoStatusIndex + 1) % TodoStatusArray.length];
+	const rotateTodoStatus = (idTodo) => {
+		const todosWithEditedOne = todos.map((todo) => {
+			if(todo.id === idTodo) {
+				const currentTodoStatusIndex = TodoStatusArray.findIndex((todoStatus) => todoStatus === todo.status);
+				const status = TodoStatusArray[(currentTodoStatusIndex + 1) % TodoStatusArray.length];
 
-                return {
-                    ...todo,
-                    status
-                };
-            }
+				return {
+					...todo,
+					status
+				};
+			}
 
-            return todo;
-        });
+			return todo;
+		});
 
-        setTodos(todosWithEditedOne);
-    };
+		setTodos(todosWithEditedOne);
+	};
 
-    return {
-        todos,
-        addTodo,
-        rotateTodoStatus
-    };
+	return {
+		todos,
+		addTodo,
+		rotateTodoStatus
+	};
 }
