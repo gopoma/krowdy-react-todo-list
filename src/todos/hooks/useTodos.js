@@ -3,8 +3,11 @@ import { v4 as uuidv4 } from "uuid";
 
 import { TodoStatus, TodoStatusArray } from "../constants";
 
-const todosFromLocalStorage = JSON.parse(localStorage.getItem("todos")) ?? [];
-const initialTodos = [...todosFromLocalStorage];
+// Immediately Invoked Function Expression (IIFE)
+const initialTodos = (() => {
+	const todosFromLocalStorage = JSON.parse(localStorage.getItem("todos")) ?? [];
+	return [...todosFromLocalStorage];
+})();
 
 export default function useTodos() {
 	const [todos, setTodos] = useState(initialTodos);
