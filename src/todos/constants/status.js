@@ -1,7 +1,7 @@
 export const TodoStatus = {
-    COMPLETED: "COMPLETED",
     PENDING: "PENDING",
     DOING: "DOING",
+    COMPLETED: "COMPLETED",
     CANCELLED: "CANCELLED"
 };
 
