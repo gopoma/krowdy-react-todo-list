@@ -60,11 +60,34 @@ export default function useTodos() {
 		setTodos(todosWithDeletedOne);
 	};
 
+	const toggleCheckTodo = (idTodo) => {
+		const todosWithCheckedOne = todos.map((todo) => {
+			if(todo.id !== idTodo) {
+				return todo;
+			}
+
+			return {
+				...todo,
+				checked: !todo.checked
+			};
+		});
+
+		setTodos(todosWithCheckedOne);
+	};
+
+	const deleteCheckedTodos = () => {
+		const todosWithoutCheckedOnes = todos.filter((todo) => !todo.checked);
+
+		setTodos(todosWithoutCheckedOnes);
+	};
+
 	return {
 		todos,
 		addTodo,
 		rotateTodoStatus,
 		updateTodo,
-		deleteTodo
+		deleteTodo,
+		toggleCheckTodo,
+		deleteCheckedTodos
 	};
 }

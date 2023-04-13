@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
 	Box,
 	Button,
+	Checkbox,
 	Dialog,
 	IconButton,
 	Table,
@@ -25,10 +26,18 @@ export default function Todos () {
 		addTodo,
 		rotateTodoStatus,
 		updateTodo,
-		deleteTodo
+		deleteTodo,
+		toggleCheckTodo,
+		deleteCheckedTodos
 	} = useTodos();
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentEditableTodo, setCurrentEditableTodo] = useState();
+
+	const hasCheckedTodos = useMemo(() => {
+		const result = todos.some((todo) => todo.checked);
+
+		return result;
+	}, [todos]);
 
 	const _handleClose = () => {
 		setIsOpen(false);
@@ -47,6 +56,14 @@ export default function Todos () {
 		deleteTodo(todo.id);
 	};
 
+	const _handleRotateTodoStatus = (todo) => () => {
+		rotateTodoStatus(todo.id);
+	};
+
+	const _handleToggleCheckTodo = (todo) => () => {
+		toggleCheckTodo(todo.id);
+	};
+
 	const _handleSubmit = (todo) => {
 		if (todo.id) {
 			updateTodo(todo);
@@ -60,6 +77,10 @@ export default function Todos () {
 
 		setIsOpen(false);
 		setCurrentEditableTodo(null);
+	};
+
+	const _handleClickDeleteCheckedTodos = () => {
+		deleteCheckedTodos();
 	};
 
 	return (
@@ -112,12 +133,17 @@ export default function Todos () {
 													backgroundColor: todoConfig.hover
 												}
 											}}
-											onClick={() => rotateTodoStatus(todo.id)}
+											onClick={_handleRotateTodoStatus(todo)}
 										>
 											{todoConfig.label}
 										</Button>
 									</TableCell>
-									<TableCell align="right">{}</TableCell>
+									<TableCell align="right">
+										<Checkbox
+											checked={Boolean(todo.checked)}
+											onChange={_handleToggleCheckTodo(todo)}
+										/>
+									</TableCell>
 									<TableCell align="right">
 										<IconButton
 											size="small"
@@ -138,6 +164,24 @@ export default function Todos () {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<IconButton
+				size="large"
+				sx={{
+					display: hasCheckedTodos ? "inline-flex" : "none",
+					color: "white",
+					backgroundColor: "error.main",
+					":hover": {
+						backgroundColor: "error.main",
+						opacity:0.9
+					},
+					position: "fixed",
+					right: 50,
+					bottom: 50
+				}}
+				onClick={_handleClickDeleteCheckedTodos}
+			>
+				<DeleteIcon sx={{ fontSize: 30 }}/>
+			</IconButton>
 			<Dialog
 				open={isOpen}
 				onClose={_handleClose}
