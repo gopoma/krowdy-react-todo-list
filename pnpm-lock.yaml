@@ -7,6 +7,7 @@ specifiers:
   '@fontsource/roboto': 4.5.8
   '@mui/icons-material': 5.11.11
   '@mui/material': 5.11.15
+  animate.css: ^4.1.1
   eslint: ^8.37.0
   eslint-plugin-react: ^7.32.2
   loader-utils: 3.2.1
@@ -22,6 +23,7 @@ dependencies:
   '@fontsource/roboto': 4.5.8
   '@mui/icons-material': 5.11.11_u36j5fq2xz23l7hlngmzttf6tu
   '@mui/material': 5.11.15_fbxtuirhogpez7m7qjkm3itwca
+  animate.css: 4.1.1
   loader-utils: 3.2.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -3116,6 +3118,10 @@ packages:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
       uri-js: 4.4.1
+    dev: false
+
+  /animate.css/4.1.1:
+    resolution: {integrity: sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==}
     dev: false
 
   /ansi-escapes/4.3.2:

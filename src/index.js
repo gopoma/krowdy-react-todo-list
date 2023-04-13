@@ -6,6 +6,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import "animate.css";
+
 import TodoApp from "./TodoApp";
 
 const rootElement = document.getElementById("root");
