@@ -105,7 +105,7 @@ export default function TodosView() {
 					fontSize={40}
 					fontWeight="bold"
 				>
-					todo.it
+					Listify
 				</Typography>
 				<Button
 					startIcon={<AddIcon />}
