@@ -5,12 +5,14 @@ import {
 	Checkbox,
 	Dialog,
 	IconButton,
+	Paper,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow
+	TableRow,
+	Typography
 } from "@mui/material";
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
@@ -84,8 +86,27 @@ export default function Todos () {
 	};
 
 	return (
-		<section>
-			<Box display="flex" justifyContent="flex-end">
+		<Box
+			component="section"
+			padding={1.5}
+			display="flex"
+			flexDirection="column"
+			gap={1.5}
+		>
+			<Box
+				component="header"
+				display="flex"
+				justifyContent="center"
+				gap={1.5}
+			>
+				<Typography
+					variant="h1"
+					component="h1"
+					fontSize={40}
+					fontWeight="bold"
+				>
+					Listify
+				</Typography>
 				<Button
 					startIcon={<AddIcon />}
 					onClick={_handleClickOpenTodoFormCreate}
@@ -94,11 +115,11 @@ export default function Todos () {
                     Agregar Tarea
 				</Button>
 			</Box>
-			<TableContainer>
-				<Table aria-label="simple table">
+			<TableContainer component={Paper}>
+				<Table sx={{ minWidth: 650 }} aria-label="simple table">
 					<TableHead>
 						<TableRow>
-							<TableCell align="right">#</TableCell>
+							<TableCell>#</TableCell>
 							<TableCell align="right">Nombre de tarea</TableCell>
 							<TableCell align="right">Estado</TableCell>
 							<TableCell align="right">Seleccionado</TableCell>
@@ -112,6 +133,8 @@ export default function Todos () {
 							return (
 								<TableRow
 									key={todo.id}
+									hover
+									selected={todo.checked}
 									sx={{
 										"&:last-child td, &:last-child th": {
 											border: 0
@@ -189,6 +212,6 @@ export default function Todos () {
 			>
 				<TodoForm onSubmit={_handleSubmit} todo={currentEditableTodo} />
 			</Dialog>
-		</section>
+		</Box>
 	);
 }
