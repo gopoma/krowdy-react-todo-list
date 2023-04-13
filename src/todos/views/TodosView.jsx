@@ -21,6 +21,7 @@ import { useTodos } from "../hooks";
 import { TodoStatus, todosConfig } from "../constants";
 import { TodoForm } from "../components";
 
+const foo = 'bar';
 
 export default function TodosView() {
 	const {
