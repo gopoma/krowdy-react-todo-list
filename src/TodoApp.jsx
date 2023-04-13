@@ -1,10 +1,10 @@
 import { AppTheme } from "./theme";
-import { TodoPage } from "./todos";
+import Todos from "./todos/Todos";
 
 export default function App() {
 	return (
 		<AppTheme>
-			<TodoPage />
+			<Todos />
 		</AppTheme>
 	);
 }

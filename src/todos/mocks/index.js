@@ -1,4 +1,4 @@
-import { TodoStatus } from "../";
+import { TodoStatus } from "../constants";
 
 export const todos = [
 	{

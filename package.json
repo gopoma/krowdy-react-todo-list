@@ -27,8 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "npx eslint --ignore-path .gitignore --ext .js,.jsx .",
-	"lint:fix": "npm run lint -- --fix"
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx src",
+	"lint:fix": "pnpm lint --fix"
   },
   "browserslist": [
     ">0.2%",

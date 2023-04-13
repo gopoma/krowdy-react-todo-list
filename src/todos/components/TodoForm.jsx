@@ -1,39 +1,56 @@
-import { Button, Paper, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 
 import { useForm } from "../../hooks";
 
-const initialTodoFormState = {
-	title: "",
-	description: ""
-};
-
-export default function TodoForm({ onSubmit }) {
-	const { title, description, formState, _handleChange } =
-		useForm(initialTodoFormState);
+export default function TodoForm({
+	todo = {},
+	onSubmit = () => {}
+}) {
+	const {
+		title,
+		description,
+		formState,
+		_handleChange
+	} = useForm({
+		title: todo?.title ?? "",
+		description: todo?.description ?? ""
+	});
 
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
-		onSubmit(formState);
+		if(!title.trim() || !description.trim()) {
+			return;
+		}
+
+		onSubmit({
+			...todo,
+			...formState
+		});
 	};
 
 	return (
-		<Paper>
-			<form onSubmit={_handleSubmit}>
-				<TextField
-					onChange={_handleChange}
-					name="title"
-					placeholder="Escribe nombre de tarea"
-					value={title}
-				/>
-				<TextField
-					onChange={_handleChange}
-					name="description"
-					placeholder="Escribe descripción"
-					value={description}
-				/>
-				<Button type="submit">Guardar</Button>
-			</form>
-		</Paper>
+		<Box
+			component="form"
+			onSubmit={_handleSubmit}
+			padding={1.5}
+			display="flex"
+			flexDirection="column"
+			gap={1.5}
+		>
+			<TextField
+				name="title"
+				onChange={_handleChange}
+				placeholder="Escribe nombre de tarea"
+				value={title}
+			/>
+			<TextField
+				name="description"
+				onChange={_handleChange}
+				placeholder="Escribe descripción"
+				value={description}
+			/>
+			<Button type="submit" variant="contained">Guardar</Button>
+		</Box>
 	);
 }

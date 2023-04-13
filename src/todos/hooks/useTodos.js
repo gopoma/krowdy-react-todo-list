@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 
-import { TodoStatus, TodoStatusArray } from "../constants";
+import { TodoStatusArray } from "../constants";
 
 // Immediately Invoked Function Expression (IIFE)
 const initialTodos = (() => {
@@ -17,37 +16,55 @@ export default function useTodos() {
 	}, [todos]);
 
 	const addTodo = (newTodo) => {
-		setTodos([
-			{
-				...newTodo,
-				id: uuidv4(),
-				status: TodoStatus.PENDING
-			},
-			...todos
-		]);
+		const todosWithAddedOne = [newTodo, ...todos];
+
+		setTodos(todosWithAddedOne);
 	};
 
 	const rotateTodoStatus = (idTodo) => {
 		const todosWithEditedOne = todos.map((todo) => {
-			if(todo.id === idTodo) {
-				const currentTodoStatusIndex = TodoStatusArray.findIndex((todoStatus) => todoStatus === todo.status);
-				const status = TodoStatusArray[(currentTodoStatusIndex + 1) % TodoStatusArray.length];
-
-				return {
-					...todo,
-					status
-				};
+			if(todo.id !== idTodo) {
+				return todo;
 			}
 
-			return todo;
+			const currentTodoStatusIndex = TodoStatusArray.findIndex((todoStatus) => todoStatus === todo.status);
+			const status = TodoStatusArray[(currentTodoStatusIndex + 1) % TodoStatusArray.length];
+
+			return {
+				...todo,
+				status
+			};
 		});
 
 		setTodos(todosWithEditedOne);
 	};
 
+	const updateTodo = (updatedTodo) => {
+		const todosWithUpdatedOne = todos.map((todo) => {
+			if(todo.id !== updatedTodo.id) {
+				return todo;
+			}
+
+			return {
+				...todo,
+				...updatedTodo
+			};
+		});
+
+		setTodos(todosWithUpdatedOne);
+	};
+
+	const deleteTodo = (idTodo) => {
+		const todosWithDeletedOne = todos.filter((todo) => todo.id !== idTodo);
+
+		setTodos(todosWithDeletedOne);
+	};
+
 	return {
 		todos,
 		addTodo,
-		rotateTodoStatus
+		rotateTodoStatus,
+		updateTodo,
+		deleteTodo
 	};
 }
